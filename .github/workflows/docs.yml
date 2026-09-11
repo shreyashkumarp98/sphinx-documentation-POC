@@ -41,22 +41,8 @@ jobs:
           sphinx-apidoc --module-first --force -o . ../..
           
           # Update modules.rst to include all generated modules
-          cat > modules.rst << 'EOF'
-sphinx-documentation-POC
-========================
-
-.. toctree::
-   :maxdepth: 4
-
-EOF
-          
-          # Add all .rst files except index, modules, and conf
-          for file in *.rst; do
-            if [[ "$file" != "index.rst" && "$file" != "modules.rst" && "$file" != "conf.rst" ]]; then
-              basename="${file%.rst}"
-              echo "   $basename" >> modules.rst
-            fi
-          done
+          cd ../..
+          python3 scripts/update_modules_rst.py
 
       - name: Build Sphinx documentation
         run: |
@@ -100,6 +86,7 @@ EOF
           git add .
           git commit -m "Automated documentation update [skip ci]" || echo "No changes to commit"
           git push origin gh-pages --force-with-lease || git push origin gh-pages
+
   deploy:
     environment:
       name: github-pages
