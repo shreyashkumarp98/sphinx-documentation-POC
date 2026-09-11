@@ -28,14 +28,17 @@ jobs:
         with:
           version: "latest"
 
-      - name: Install Sphinx and dependencies
+      - name: Create virtual environment and install dependencies
         run: |
+          uv venv
+          source .venv/bin/activate
           uv pip install -e ".[docs]"
 
       - name: Build Sphinx documentation
         run: |
+          source .venv/bin/activate
           cd docs
-          uv run sphinx-build source build
+          sphinx-build source build
 
       - name: Commit to gh-pages branch
         run: |
