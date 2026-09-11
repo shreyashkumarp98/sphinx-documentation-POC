@@ -41,22 +41,22 @@ jobs:
           sphinx-apidoc --module-first --force -o . ../..
           
           # Update modules.rst to include all generated modules
-          cat > modules.rst << 'EOF'
-sphinx-documentation-POC
-========================
+          python3 << 'PYEOF'
+import os
 
-.. toctree::
-   :maxdepth: 4
-
-EOF
-          
-          # Add all .rst files except index, modules, and conf
-          for file in *.rst; do
-            if [[ "$file" != "index.rst" && "$file" != "modules.rst" && "$file" != "conf.rst" ]]; then
-              basename="${file%.rst}"
-              echo "   $basename" >> modules.rst
-            fi
-          done
+# Create new modules.rst
+with open('modules.rst', 'w') as f:
+    f.write('sphinx-documentation-POC\n')
+    f.write('========================\n\n')
+    f.write('.. toctree::\n')
+    f.write('   :maxdepth: 4\n\n')
+    
+    # Add all .rst files except index, modules, and conf
+    for file in sorted(os.listdir('.')):
+        if file.endswith('.rst') and file not in ['index.rst', 'modules.rst', 'conf.rst']:
+            module_name = file.replace('.rst', '')
+            f.write(f'   {module_name}\n')
+PYEOF
 
       - name: Build Sphinx documentation
         run: |
