@@ -4,6 +4,7 @@ sphinx-documentation-POC
 .. toctree::
    :maxdepth: 4
 
+   api_client
    main
    models
    utils

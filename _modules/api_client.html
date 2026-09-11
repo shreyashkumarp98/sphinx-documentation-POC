@@ -1,0 +1,507 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>api_client &mdash; test-autolink-functionality 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            test-autolink-functionality
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">sphinx-documentation-POC</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">test-autolink-functionality</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">api_client</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for api_client</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">API client for external service integration.</span>
+
+<span class="sd">This module provides a client class for making HTTP requests to external APIs</span>
+<span class="sd">with proper error handling and response processing.</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+
+
+<div class="viewcode-block" id="HTTPMethod">
+<a class="viewcode-back" href="../api_client.html#api_client.HTTPMethod">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">HTTPMethod</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""HTTP methods supported by the API client."""</span>
+    <span class="n">GET</span> <span class="o">=</span> <span class="s2">"GET"</span>
+    <span class="n">POST</span> <span class="o">=</span> <span class="s2">"POST"</span>
+    <span class="n">PUT</span> <span class="o">=</span> <span class="s2">"PUT"</span>
+    <span class="n">DELETE</span> <span class="o">=</span> <span class="s2">"DELETE"</span>
+    <span class="n">PATCH</span> <span class="o">=</span> <span class="s2">"PATCH"</span></div>
+
+
+
+<div class="viewcode-block" id="APIResponse">
+<a class="viewcode-back" href="../api_client.html#api_client.APIResponse">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">APIResponse</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Represents an API response.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        status_code: HTTP status code.</span>
+<span class="sd">        data: Response data as dictionary.</span>
+<span class="sd">        headers: Response headers.</span>
+<span class="sd">        success: Whether the request was successful.</span>
+<span class="sd">        </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; response = APIResponse(200, {"user": "john"}, {}, True)</span>
+<span class="sd">        &gt;&gt;&gt; response.success</span>
+<span class="sd">        True</span>
+<span class="sd">    """</span>
+    <span class="n">status_code</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span>
+    
+<div class="viewcode-block" id="APIResponse.get_error_message">
+<a class="viewcode-back" href="../api_client.html#api_client.APIResponse.get_error_message">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_error_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Get error message from failed response.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Error message string or empty string if successful.</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; response = APIResponse(404, {"error": "Not found"}, {}, False)</span>
+<span class="sd">            &gt;&gt;&gt; response.get_error_message()</span>
+<span class="sd">            'Not found'</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"error"</span><span class="p">,</span> <span class="s2">"Unknown error"</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="APIClient">
+<a class="viewcode-back" href="../api_client.html#api_client.APIClient">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">APIClient</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    HTTP client for making API requests.</span>
+<span class="sd">    </span>
+<span class="sd">    This class provides methods for making HTTP requests to external APIs</span>
+<span class="sd">    with built-in error handling and response processing.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        base_url: Base URL for all API requests.</span>
+<span class="sd">        timeout: Request timeout in seconds.</span>
+<span class="sd">        headers: Default headers for all requests.</span>
+<span class="sd">        </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; client = APIClient("https://api.example.com")</span>
+<span class="sd">        &gt;&gt;&gt; client.set_auth_header("Bearer token123")</span>
+<span class="sd">        &gt;&gt;&gt; response = client.get("/users/1")</span>
+<span class="sd">        &gt;&gt;&gt; response.success</span>
+<span class="sd">        True</span>
+<span class="sd">    """</span>
+    
+<div class="viewcode-block" id="APIClient.__init__">
+<a class="viewcode-back" href="../api_client.html#api_client.APIClient.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Initialize the API client.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            base_url: Base URL for API requests.</span>
+<span class="sd">            timeout: Request timeout in seconds.</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; client = APIClient("https://api.example.com", timeout=60)</span>
+<span class="sd">            &gt;&gt;&gt; client.base_url</span>
+<span class="sd">            'https://api.example.com'</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">base_url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+            <span class="s2">"Accept"</span><span class="p">:</span> <span class="s2">"application/json"</span>
+        <span class="p">}</span></div>
+
+    
+<div class="viewcode-block" id="APIClient.set_auth_header">
+<a class="viewcode-back" href="../api_client.html#api_client.APIClient.set_auth_header">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_auth_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auth_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Set authentication header for requests.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            auth_token: Authentication token (e.g., "Bearer token123").</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; client = APIClient("https://api.example.com")</span>
+<span class="sd">            &gt;&gt;&gt; client.set_auth_header("Bearer token123")</span>
+<span class="sd">            &gt;&gt;&gt; "Authorization" in client.headers</span>
+<span class="sd">            True</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">"Authorization"</span><span class="p">]</span> <span class="o">=</span> <span class="n">auth_token</span></div>
+
+    
+<div class="viewcode-block" id="APIClient.set_header">
+<a class="viewcode-back" href="../api_client.html#api_client.APIClient.set_header">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Set a custom header for requests.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            key: Header name.</span>
+<span class="sd">            value: Header value.</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; client = APIClient("https://api.example.com")</span>
+<span class="sd">            &gt;&gt;&gt; client.set_header("X-Custom-Header", "value")</span>
+<span class="sd">            &gt;&gt;&gt; client.headers["X-Custom-Header"]</span>
+<span class="sd">            'value'</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+    
+<div class="viewcode-block" id="APIClient.get">
+<a class="viewcode-back" href="../api_client.html#api_client.APIClient.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">APIResponse</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Make a GET request.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint: API endpoint path.</span>
+<span class="sd">            params: Query parameters.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            APIResponse object with the response data.</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; client = APIClient("https://api.example.com")</span>
+<span class="sd">            &gt;&gt;&gt; response = client.get("/users", {"page": 1})</span>
+<span class="sd">            &gt;&gt;&gt; response.status_code</span>
+<span class="sd">            200</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="APIClient.post">
+<a class="viewcode-back" href="../api_client.html#api_client.APIClient.post">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">APIResponse</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Make a POST request.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint: API endpoint path.</span>
+<span class="sd">            data: Request body data.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            APIResponse object with the response data.</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; client = APIClient("https://api.example.com")</span>
+<span class="sd">            &gt;&gt;&gt; response = client.post("/users", {"name": "John"})</span>
+<span class="sd">            &gt;&gt;&gt; response.status_code</span>
+<span class="sd">            201</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="APIClient.put">
+<a class="viewcode-back" href="../api_client.html#api_client.APIClient.put">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">APIResponse</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Make a PUT request.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint: API endpoint path.</span>
+<span class="sd">            data: Request body data.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            APIResponse object with the response data.</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; client = APIClient("https://api.example.com")</span>
+<span class="sd">            &gt;&gt;&gt; response = client.put("/users/1", {"name": "Jane"})</span>
+<span class="sd">            &gt;&gt;&gt; response.status_code</span>
+<span class="sd">            200</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="APIClient.delete">
+<a class="viewcode-back" href="../api_client.html#api_client.APIClient.delete">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">APIResponse</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Make a DELETE request.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint: API endpoint path.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            APIResponse object with the response data.</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; client = APIClient("https://api.example.com")</span>
+<span class="sd">            &gt;&gt;&gt; response = client.delete("/users/1")</span>
+<span class="sd">            &gt;&gt;&gt; response.status_code</span>
+<span class="sd">            204</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">DELETE</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span></div>
+
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_make_request</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> 
+        <span class="n">method</span><span class="p">:</span> <span class="n">HTTPMethod</span><span class="p">,</span> 
+        <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+        <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">APIResponse</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Internal method to make HTTP requests.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            method: HTTP method to use.</span>
+<span class="sd">            endpoint: API endpoint path.</span>
+<span class="sd">            params: Query parameters.</span>
+<span class="sd">            data: Request body data.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            APIResponse object with the response data.</span>
+<span class="sd">            </span>
+<span class="sd">        Note:</span>
+<span class="sd">            This is a mock implementation. In production, use requests library.</span>
+<span class="sd">        """</span>
+        <span class="c1"># Mock implementation for demonstration</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">"</span>
+        
+        <span class="c1"># Simulate successful response</span>
+        <span class="n">mock_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"url"</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
+            <span class="s2">"method"</span><span class="p">:</span> <span class="n">method</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="s2">"params"</span><span class="p">:</span> <span class="n">params</span> <span class="ow">or</span> <span class="p">{},</span>
+            <span class="s2">"data"</span><span class="p">:</span> <span class="n">data</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">APIResponse</span><span class="p">(</span>
+            <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">mock_data</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">},</span>
+            <span class="n">success</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ServiceRegistry">
+<a class="viewcode-back" href="../api_client.html#api_client.ServiceRegistry">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ServiceRegistry</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Registry for managing multiple API services.</span>
+<span class="sd">    </span>
+<span class="sd">    This class allows management of multiple API clients for different services.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        services: Dictionary of registered API clients.</span>
+<span class="sd">        </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; registry = ServiceRegistry()</span>
+<span class="sd">        &gt;&gt;&gt; registry.register_service("users", "https://api.example.com/users")</span>
+<span class="sd">        &gt;&gt;&gt; client = registry.get_client("users")</span>
+<span class="sd">        &gt;&gt;&gt; client.base_url</span>
+<span class="sd">        'https://api.example.com/users'</span>
+<span class="sd">    """</span>
+    
+<div class="viewcode-block" id="ServiceRegistry.__init__">
+<a class="viewcode-back" href="../api_client.html#api_client.ServiceRegistry.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Initialize the service registry.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">services</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">APIClient</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span></div>
+
+    
+<div class="viewcode-block" id="ServiceRegistry.register_service">
+<a class="viewcode-back" href="../api_client.html#api_client.ServiceRegistry.register_service">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">APIClient</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Register a new API service.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            name: Service name/identifier.</span>
+<span class="sd">            base_url: Base URL for the service.</span>
+<span class="sd">            timeout: Request timeout in seconds.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The created APIClient instance.</span>
+<span class="sd">            </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If service name already exists.</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; registry = ServiceRegistry()</span>
+<span class="sd">            &gt;&gt;&gt; client = registry.register_service("users", "https://api.example.com")</span>
+<span class="sd">            &gt;&gt;&gt; "users" in registry.services</span>
+<span class="sd">            True</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">services</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Service '</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">' already registered"</span><span class="p">)</span>
+        
+        <span class="n">client</span> <span class="o">=</span> <span class="n">APIClient</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">services</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="k">return</span> <span class="n">client</span></div>
+
+    
+<div class="viewcode-block" id="ServiceRegistry.get_client">
+<a class="viewcode-back" href="../api_client.html#api_client.ServiceRegistry.get_client">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">APIClient</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Get a registered API client by name.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            name: Service name.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            APIClient instance if found, None otherwise.</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; registry = ServiceRegistry()</span>
+<span class="sd">            &gt;&gt;&gt; registry.register_service("users", "https://api.example.com")</span>
+<span class="sd">            &gt;&gt;&gt; client = registry.get_client("users")</span>
+<span class="sd">            &gt;&gt;&gt; client is not None</span>
+<span class="sd">            True</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">services</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="ServiceRegistry.list_services">
+<a class="viewcode-back" href="../api_client.html#api_client.ServiceRegistry.list_services">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_services</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        List all registered service names.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            List of service names.</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; registry = ServiceRegistry()</span>
+<span class="sd">            &gt;&gt;&gt; registry.register_service("users", "https://api.example.com")</span>
+<span class="sd">            &gt;&gt;&gt; registry.register_service("products", "https://api.example.com")</span>
+<span class="sd">            &gt;&gt;&gt; len(registry.list_services())</span>
+<span class="sd">            2</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">services</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+    
+<div class="viewcode-block" id="ServiceRegistry.remove_service">
+<a class="viewcode-back" href="../api_client.html#api_client.ServiceRegistry.remove_service">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Remove a registered service.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            name: Service name to remove.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            True if service was removed, False if not found.</span>
+<span class="sd">            </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; registry = ServiceRegistry()</span>
+<span class="sd">            &gt;&gt;&gt; registry.register_service("users", "https://api.example.com")</span>
+<span class="sd">            &gt;&gt;&gt; registry.remove_service("users")</span>
+<span class="sd">            True</span>
+<span class="sd">            &gt;&gt;&gt; registry.remove_service("nonexistent")</span>
+<span class="sd">            False</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">services</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">services</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Your Company.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
