@@ -138,9 +138,36 @@
 
 
 
+<div class="viewcode-block" id="divide">
+<a class="viewcode-back" href="../modules.html#main.divide">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Divide two numbers.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        x: Numerator.</span>
+<span class="sd">        y: Denominator.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        The quotient of x divided by y.</span>
+<span class="sd">        </span>
+<span class="sd">    Raises:</span>
+<span class="sd">        ZeroDivisionError: If y is zero.</span>
+<span class="sd">        </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; divide(10.0, 2.0)</span>
+<span class="sd">        5.0</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span><span class="s2">"Cannot divide by zero"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span></div>
+
+
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">greet</span><span class="p">(</span><span class="s2">"World"</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"2 + 3 = </span><span class="si">{</span><span class="n">calculate_sum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"10 / 2 = </span><span class="si">{</span><span class="n">divide</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 
            </div>

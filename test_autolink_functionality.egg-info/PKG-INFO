@@ -1,8 +1,0 @@
-Metadata-Version: 2.4
-Name: test-autolink-functionality
-Version: 0.1.0
-Requires-Python: >=3.13
-Provides-Extra: docs
-Requires-Dist: sphinx>=9.1.0; extra == "docs"
-Requires-Dist: sphinx-autodoc-typehints>=3.13.6; extra == "docs"
-Requires-Dist: sphinx-rtd-theme>=3.1.0; extra == "docs"
