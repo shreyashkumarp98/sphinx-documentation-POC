@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview: module code &mdash; test-autolink-functionality 0.1.0 documentation</title>
+  <title>utils &mdash; test-autolink-functionality 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
@@ -58,7 +58,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Overview: module code</li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">utils</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -67,10 +68,54 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="main.html">main</a></li>
-<li><a href="utils.html">utils</a></li>
-</ul>
+  <h1>Source code for utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Utility functions for the test-autolink-functionality project.</span>
+
+<span class="sd">This module contains helper functions that are used across the project.</span>
+<span class="sd">"""</span>
+
+
+<div class="viewcode-block" id="format_date">
+<a class="viewcode-back" href="../utils.html#utils.format_date">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_date</span><span class="p">(</span><span class="n">date_string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Format a date string to a standard format.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        date_string: The date string to format.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        The formatted date string.</span>
+<span class="sd">        </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; format_date("2026-09-11")</span>
+<span class="sd">        'September 11, 2026'</span>
+<span class="sd">    """</span>
+    <span class="c1"># This is a simplified example</span>
+    <span class="k">return</span> <span class="n">date_string</span></div>
+
+
+
+<div class="viewcode-block" id="validate_email">
+<a class="viewcode-back" href="../utils.html#utils.validate_email">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_email</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Validate an email address format.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        email: The email address to validate.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        True if the email is valid, False otherwise.</span>
+<span class="sd">        </span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; validate_email("test@example.com")</span>
+<span class="sd">        True</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="s2">"@"</span> <span class="ow">in</span> <span class="n">email</span> <span class="ow">and</span> <span class="s2">"."</span> <span class="ow">in</span> <span class="n">email</span></div>
+
+</pre></div>
 
            </div>
           </div>

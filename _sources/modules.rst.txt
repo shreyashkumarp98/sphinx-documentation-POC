@@ -1,12 +1,8 @@
-API Documentation
-=================
+sphinx-documentation-POC
+========================
 
-This section contains the API documentation for all modules in the project.
+.. toctree::
+   :maxdepth: 4
 
-Main Module
------------
-
-.. automodule:: main
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   main
+   utils
