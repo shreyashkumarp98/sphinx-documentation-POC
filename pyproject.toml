@@ -5,7 +5,7 @@ requires-python = ">=3.13"
 dependencies = []
 
 [tool.setuptools]
-py-modules = ["main", "utils", "models"]
+py-modules = ["main", "utils", "models", "api_client"]
 
 [project.optional-dependencies]
 docs = [
