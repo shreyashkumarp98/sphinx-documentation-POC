@@ -5,4 +5,5 @@ sphinx-documentation-POC
    :maxdepth: 4
 
    main
+   models
    utils
