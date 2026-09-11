@@ -4,9 +4,16 @@ version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = []
 
+[tool.setuptools]
+py-modules = ["main", "utils"]
+
 [project.optional-dependencies]
 docs = [
     "sphinx>=9.1.0",
     "sphinx-autodoc-typehints>=3.13.6",
     "sphinx-rtd-theme>=3.1.0",
 ]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
