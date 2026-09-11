@@ -58,6 +58,30 @@ def multiply(x: float, y: float) -> float:
     return x * y
 
 
+def divide(x: float, y: float) -> float:
+    """
+    Divide two numbers.
+    
+    Args:
+        x: Numerator.
+        y: Denominator.
+        
+    Returns:
+        The quotient of x divided by y.
+        
+    Raises:
+        ZeroDivisionError: If y is zero.
+        
+    Examples:
+        >>> divide(10.0, 2.0)
+        5.0
+    """
+    if y == 0:
+        raise ZeroDivisionError("Cannot divide by zero")
+    return x / y
+
+
 if __name__ == "__main__":
     print(greet("World"))
     print(f"2 + 3 = {calculate_sum(2, 3)}")
+    print(f"10 / 2 = {divide(10.0, 2.0)}")
