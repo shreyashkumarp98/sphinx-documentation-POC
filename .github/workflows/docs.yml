@@ -61,6 +61,10 @@ jobs:
           mkdir -p /tmp/docs-build
           cp -r docs/build/* /tmp/docs-build/
           
+          # Stash any local changes before switching branches
+          echo "Stashing local changes"
+          git stash push -m "Auto-generated documentation changes" || echo "No changes to stash"
+          
           # Create or checkout gh-pages branch
           if git ls-remote --heads origin gh-pages | grep -q 'gh-pages'; then
             echo "Checking out existing gh-pages branch"
