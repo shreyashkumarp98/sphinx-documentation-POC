@@ -34,6 +34,30 @@ jobs:
           source .venv/bin/activate
           uv pip install -e ".[docs]"
 
+      - name: Generate API documentation with sphinx-apidoc
+        run: |
+          source .venv/bin/activate
+          cd docs/source
+          sphinx-apidoc --module-first --force -o . ../..
+          
+          # Update modules.rst to include all generated modules
+          cat > modules.rst << 'EOF'
+sphinx-documentation-POC
+========================
+
+.. toctree::
+   :maxdepth: 4
+
+EOF
+          
+          # Add all .rst files except index, modules, and conf
+          for file in *.rst; do
+            if [[ "$file" != "index.rst" && "$file" != "modules.rst" && "$file" != "conf.rst" ]]; then
+              basename="${file%.rst}"
+              echo "   $basename" >> modules.rst
+            fi
+          done
+
       - name: Build Sphinx documentation
         run: |
           source .venv/bin/activate

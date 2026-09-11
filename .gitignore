@@ -16,6 +16,10 @@ venv/
 docs/build/
 docs/source/_build/
 
+# Auto-generated Sphinx module files (except modules.rst)
+docs/source/main.rst
+!docs/source/modules.rst
+
 # IDE
 .vscode/
 .idea/
