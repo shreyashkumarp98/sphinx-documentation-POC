@@ -12,6 +12,7 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
+    'sphinx.ext.intersphinx',
     'sphinx_autodoc_typehints',
 ]
 
@@ -35,3 +36,8 @@ napoleon_numpy_docstring = True
 napoleon_include_init_with_doc = True
 napoleon_include_private_with_doc = False
 napoleon_include_special_with_doc = True
+
+# Intersphinx configuration for linking to external docs
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3', None),
+}
