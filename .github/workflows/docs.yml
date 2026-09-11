@@ -46,25 +46,36 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           
+          # Copy built documentation to temporary location before switching branches
+          echo "Copying built documentation to temp location"
+          mkdir -p /tmp/docs-build
+          cp -r docs/build/* /tmp/docs-build/
+          
           # Create or checkout gh-pages branch
           if git ls-remote --heads origin gh-pages | grep -q 'gh-pages'; then
+            echo "Checking out existing gh-pages branch"
             git checkout gh-pages
             git pull origin gh-pages --rebase
             # Remove all existing files except .git
-            find . -maxdepth 1 ! -name '.git' ! -name '.' ! -name '..' -exec rm -rf {} +
+            find . -maxdepth 1 ! -name '.git' ! -name '.' ! -name '..' -exec rm -rf {} + || true
           else
+            echo "Creating new orphan gh-pages branch"
             git checkout --orphan gh-pages
-            git rm -rf .
+            git rm -rf . || true
           fi
           
-          # Copy built documentation
-          cp -r docs/build/* .
+          # Copy built documentation from temp location
+          echo "Copying built documentation from temp location"
+          cp -r /tmp/docs-build/* . || echo "No files to copy"
+          
+          # List files for debugging
+          echo "Files in gh-pages branch:"
+          ls -la
           
           # Commit changes
           git add .
           git commit -m "Automated documentation update [skip ci]" || echo "No changes to commit"
-          git push origin gh-pages --force-with-lease
-
+          git push origin gh-pages --force-with-lease || git push origin gh-pages
   deploy:
     environment:
       name: github-pages
