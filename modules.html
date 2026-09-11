@@ -46,6 +46,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">sphinx-documentation-POC</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api_client.html">api_client module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">database package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
@@ -125,6 +126,100 @@
 <li class="toctree-l3"><a class="reference internal" href="api_client.html#api_client.ServiceRegistry.get_client"><code class="docutils literal notranslate"><span class="pre">ServiceRegistry.get_client()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api_client.html#api_client.ServiceRegistry.list_services"><code class="docutils literal notranslate"><span class="pre">ServiceRegistry.list_services()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api_client.html#api_client.ServiceRegistry.remove_service"><code class="docutils literal notranslate"><span class="pre">ServiceRegistry.remove_service()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">database package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="database.html#database.DatabaseConnection"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseConnection.config"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseConnection.is_connected"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.is_connected</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseConnection.__init__"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseConnection.connect"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.connect()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseConnection.disconnect"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.disconnect()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseConnection.execute_query"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.execute_query()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseConnection.begin_transaction"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.begin_transaction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseConnection.commit_transaction"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.commit_transaction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseConnection.rollback_transaction"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.rollback_transaction()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#database.DatabaseModel"><code class="docutils literal notranslate"><span class="pre">DatabaseModel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseModel.id"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseModel.created_at"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.created_at</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseModel.updated_at"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.updated_at</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseModel.__init__"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseModel.to_dict"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseModel.from_dict"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseModel.save"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseModel.delete"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.DatabaseModel.update_timestamp"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.update_timestamp()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#module-database.connection">database.connection module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.connection.DatabaseType"><code class="docutils literal notranslate"><span class="pre">DatabaseType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseType.POSTGRESQL"><code class="docutils literal notranslate"><span class="pre">DatabaseType.POSTGRESQL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseType.MYSQL"><code class="docutils literal notranslate"><span class="pre">DatabaseType.MYSQL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseType.SQLITE"><code class="docutils literal notranslate"><span class="pre">DatabaseType.SQLITE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseType.MONGODB"><code class="docutils literal notranslate"><span class="pre">DatabaseType.MONGODB</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.connection.ConnectionConfig"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.ConnectionConfig.host"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.host</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.ConnectionConfig.port"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.port</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.ConnectionConfig.database"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.database</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.ConnectionConfig.username"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.username</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.ConnectionConfig.password"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.password</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.ConnectionConfig.db_type"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.db_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#id0"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.host</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#id1"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.port</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#id2"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.database</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#id3"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.username</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#id4"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.password</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#id5"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.db_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.ConnectionConfig.get_connection_string"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.get_connection_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.ConnectionConfig.__init__"><code class="docutils literal notranslate"><span class="pre">ConnectionConfig.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.connection.DatabaseConnection"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseConnection.config"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseConnection.is_connected"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.is_connected</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseConnection.__init__"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseConnection.connect"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.connect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseConnection.disconnect"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.disconnect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseConnection.execute_query"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.execute_query()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseConnection.begin_transaction"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.begin_transaction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseConnection.commit_transaction"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.commit_transaction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.connection.DatabaseConnection.rollback_transaction"><code class="docutils literal notranslate"><span class="pre">DatabaseConnection.rollback_transaction()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="database.html#module-database.models">database.models module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.models.DatabaseModel"><code class="docutils literal notranslate"><span class="pre">DatabaseModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.DatabaseModel.id"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.DatabaseModel.created_at"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.DatabaseModel.updated_at"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.updated_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.DatabaseModel.__init__"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.DatabaseModel.to_dict"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.DatabaseModel.from_dict"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.from_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.DatabaseModel.save"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.DatabaseModel.delete"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.DatabaseModel.update_timestamp"><code class="docutils literal notranslate"><span class="pre">DatabaseModel.update_timestamp()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="database.html#database.models.QueryBuilder"><code class="docutils literal notranslate"><span class="pre">QueryBuilder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.QueryBuilder.table"><code class="docutils literal notranslate"><span class="pre">QueryBuilder.table</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.QueryBuilder.conditions"><code class="docutils literal notranslate"><span class="pre">QueryBuilder.conditions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.QueryBuilder.fields"><code class="docutils literal notranslate"><span class="pre">QueryBuilder.fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.QueryBuilder.__init__"><code class="docutils literal notranslate"><span class="pre">QueryBuilder.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.QueryBuilder.select"><code class="docutils literal notranslate"><span class="pre">QueryBuilder.select()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.QueryBuilder.where"><code class="docutils literal notranslate"><span class="pre">QueryBuilder.where()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.QueryBuilder.order"><code class="docutils literal notranslate"><span class="pre">QueryBuilder.order()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.QueryBuilder.limit"><code class="docutils literal notranslate"><span class="pre">QueryBuilder.limit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="database.html#database.models.QueryBuilder.build"><code class="docutils literal notranslate"><span class="pre">QueryBuilder.build()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

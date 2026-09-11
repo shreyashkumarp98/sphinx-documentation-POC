@@ -5,6 +5,7 @@ sphinx-documentation-POC
    :maxdepth: 4
 
    api_client
+   database
    main
    models
    utils
