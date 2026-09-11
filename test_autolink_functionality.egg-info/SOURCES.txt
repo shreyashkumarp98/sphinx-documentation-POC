@@ -1,0 +1,8 @@
+README.md
+main.py
+pyproject.toml
+test_autolink_functionality.egg-info/PKG-INFO
+test_autolink_functionality.egg-info/SOURCES.txt
+test_autolink_functionality.egg-info/dependency_links.txt
+test_autolink_functionality.egg-info/requires.txt
+test_autolink_functionality.egg-info/top_level.txt
